@@ -4,18 +4,34 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 import Vue from 'vue';
+import swal from 'sweetalert2';
+window.Swal = swal;
 import VueRouter from 'vue-router';
 
 
 require('./bootstrap');
 
 window.Vue = require('vue');
+import moment from 'moment';
+import { Form, HasError, AlertError } from 'vform'
 
+
+window.Form = Form;
+Vue.component(HasError.name, HasError)
+Vue.component(AlertError.name, AlertError)
+ 
 Vue.use(VueRouter)
+
+import VueProgressBar from 'vue-progressbar'
+Vue.use(VueProgressBar,{
+  color: 'rgb(143, 255, 199)',
+  failedColor: 'red',
+  height: '3px'
+})
 
 let routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue').default },
-    { path: '/Users', component: require('./components/Users.vue').default },
+    { path: '/users', component: require('./components/Users.vue').default },
     { path: '/profile', component: require('./components/Profile.vue').default }
   ]
 
@@ -24,7 +40,11 @@ const router = new VueRouter({
     routes // short for `routes: routes`
   })
   
+  Vue.filter('myDate',function(created){
+    return moment(created).format('MMMM Do YYYY');
+  });
 
+window.Fire = new Vue();
 
 /**
  * The following block of code may be used to automatically register your
@@ -38,6 +58,7 @@ const router = new VueRouter({
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 import ExampleComponent from './components/ExampleComponent.vue';
+import { values } from 'lodash';
 
 Vue.component(
   'example-component', 
