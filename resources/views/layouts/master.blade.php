@@ -75,13 +75,59 @@ scratch. This page gets rid of all links and provides the needed markup only.
                with font-awesome or any other icon font library -->
 
                
-          <li class="nav-item">
-            <router-link to="/dashboard" class="nav-link">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt blue"></i>
               <p>
                 Dashboard 
+                <i class="right fa fa-angle-left"></i>
               </p>
-            </router-link>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link to="/User types" class="nav-link">
+                  <i class="nav-icon fas fa-person-sign"></i>
+                  <p>User types</p>
+                  </router-link>
+                <router-link to="/Users info" class="nav-link">
+                  <i class="nav-icon fas fa-person-sign"></i> 
+                  <p>Users info</p>
+                </router-link>
+                <router-link to="/Buses" class="nav-link">
+                  <i class="nav-icon fas fa-person-sign"></i>
+                  <p>Buses</p>
+                </router-link>
+                <router-link to="/Route info" class="nav-link">
+                  <i class="nav-icon fas fa-person-sign"></i>
+                  <p>Route info</p>
+                </router-link>
+                <router-link to="/Bus driver list" class="nav-link">
+                  <i class="nav-icon fas fa-person-sign"></i>
+                  <p>Bus driver list</p>
+                </router-link>
+                <router-link to="/Tickets" class="nav-link">
+                  <i class="nav-icon fas fa-person-sign"></i>
+                  <p>Tickets</p>
+                </router-link>
+                <router-link to="/Customer ride info" class="nav-link">
+                  <i class="nav-icon fas fa-person-sign"></i>
+                  <p>Customer ride info</p>
+                </router-link>
+                <router-link to="/Customer wallet" class="nav-link">
+                  <i class="nav-icon fas fa-person-sign"></i>
+                  <p>Customer wallet</p>
+                </router-link>
+                <router-link to="/Bus income" class="nav-link">
+                  <i class="nav-icon fas fa-person-sign"></i>
+                  <p>Bus income</p>
+                </router-link>
+                <router-link to="/Bus location" class="nav-link">
+                  <i class="nav-icon fas fa-person-sign"></i>
+                  <p>Bus location</p>
+                </router-link>
+              </li>
+             
+            </ul>
           </li>
           
           <li class="nav-item has-treeview">
