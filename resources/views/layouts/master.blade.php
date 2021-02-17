@@ -13,20 +13,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <title>AdminLTE 3 | Starter</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="/css/app.css">
- 
+
  </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper" id="app">
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-   
+
     <!-- Left navbar links -->
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
       </li>
-    
+
     </ul>
 
     <!-- SEARCH FORM -->
@@ -41,7 +41,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </div>
     </form>
 
-   
+
   </nav>
   <!-- /.navbar -->
 
@@ -74,12 +74,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-               
+
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt blue"></i>
               <p>
-                Dashboard 
+                Dashboard
                 <i class="right fa fa-angle-left"></i>
               </p>
             </a>
@@ -90,7 +90,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>User types</p>
                   </router-link>
                 <router-link to="/Users info" class="nav-link">
-                  <i class="nav-icon fas fa-person-sign"></i> 
+                  <i class="nav-icon fas fa-person-sign"></i>
                   <p>Users info</p>
                 </router-link>
                 <router-link to="/Buses" class="nav-link">
@@ -126,15 +126,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <p>Bus location</p>
                 </router-link>
               </li>
-             
+
             </ul>
           </li>
-          
+
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fa fa-cog green"></i>
               <p>
-                Management
+                User Management
                 <i class="right fa fa-angle-left"></i>
               </p>
             </a>
@@ -144,18 +144,66 @@ scratch. This page gets rid of all links and provides the needed markup only.
                   <i class="fas fa-users nav-icon"></i>
                   <p>Users</p>
                 </router-link>
-              </li>
-
-            </ul>
-          </li>
-
-          <li class="nav-item">
-            <router-link to ="/profile" class="nav-link">
+                <router-link to ="/profile" class="nav-link">
               <i class="nav-icon fas fa-user"></i>
               <p>
                 Profile
               </p>
             </router-link>
+              </li>
+
+            </ul>
+          </li>
+
+
+
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fa fa-cog green"></i>
+              <p>
+                Bus
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link to="/buses" class="nav-link">
+                  <i class="fas fa-users nav-icon"></i>
+                  <p>Manage Bus</p>
+                </router-link>
+                <router-link to="/users" class="nav-link">
+                  <i class="fas fa-users nav-icon"></i>
+                  <p> Bus profile</p>
+                </router-link>
+
+              </li>
+
+            </ul>
+          </li>
+
+
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+            <i class="nav-icon fas fa-user"></i>
+              <p>
+                Driver
+                <i class="right fa fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <router-link to="/users" class="nav-link">
+                  <i class="fas fa-users nav-icon"></i>
+                  <p>Manage Driver</p>
+                </router-link>
+                <router-link to="/users" class="nav-link">
+                  <i class="fas fa-users nav-icon"></i>
+                  <p> Driver profile</p>
+                </router-link>
+
+              </li>
+
+            </ul>
           </li>
 
           <li class="nav-item">
@@ -177,12 +225,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </nav>
       <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar --> 
+    <!-- /.sidebar -->
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    
+
 
     <!-- Main content -->
     <div class="content">
