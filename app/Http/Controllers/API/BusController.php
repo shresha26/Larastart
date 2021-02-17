@@ -61,10 +61,10 @@ class BusController extends Controller
         //return ['message' => "Success"];
     }
 
-    public function profile()
-    {
-        return auth('api')->bus();
-    }
+    // public function profile()
+    // {
+    //     return auth('api')->bus();
+    // }
 
 
       /**
