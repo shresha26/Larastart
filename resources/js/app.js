@@ -19,7 +19,7 @@ import { Form, HasError, AlertError } from 'vform'
 window.Form = Form;
 Vue.component(HasError.name, HasError)
 Vue.component(AlertError.name, AlertError)
- 
+
 Vue.use(VueRouter)
 
 import VueProgressBar from 'vue-progressbar'
@@ -32,14 +32,17 @@ Vue.use(VueProgressBar,{
 let routes = [
     { path: '/dashboard', component: require('./components/Dashboard.vue').default },
     { path: '/users', component: require('./components/Users.vue').default },
-    { path: '/profile', component: require('./components/Profile.vue').default }
+    { path: '/profile', component: require('./components/Profile.vue').default },
+    { path: '/buses', component: require('./components/ManageBus.vue').default },
+    { path: '/busprofile', component: require('./components/BusProfile.vue').default }
+
   ]
 
 const router = new VueRouter({
   mode: 'history',
     routes // short for `routes: routes`
   })
-  
+
   Vue.filter('myDate',function(created){
     return moment(created).format('MMMM Do YYYY');
   });
@@ -61,7 +64,7 @@ import ExampleComponent from './components/ExampleComponent.vue';
 import { values } from 'lodash';
 
 Vue.component(
-  'example-component', 
+  'example-component',
   require('./components/ExampleComponent.vue').default);/**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
