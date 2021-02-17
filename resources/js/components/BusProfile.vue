@@ -13,8 +13,8 @@
         <div class="row">
             <div class="col-md-12 mt-3">
                 <div class="card card-widget widget-user">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header text-white" style="background-image:url('./img/2.jpg')">
+                <!-- Add the bg color to the header using any of the bg-* classes  //style="background-image:url('./img/2.jpg')" -->
+                <div class="widget-user-header text-white" >
                     <h3 class="widget-user-username">{{this.form.name}}</h3>
                     <h5 class="widget-user-desc">{{this.form.type}}</h5>
                 </div>

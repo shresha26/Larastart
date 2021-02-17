@@ -192,7 +192,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <router-link to="/users" class="nav-link">
+                <router-link to="/manage_driver" class="nav-link">
                   <i class="fas fa-users nav-icon"></i>
                   <p>Manage Driver</p>
                 </router-link>

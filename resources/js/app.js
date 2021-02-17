@@ -34,7 +34,7 @@ let routes = [
     { path: '/users', component: require('./components/Users.vue').default },
     { path: '/profile', component: require('./components/Profile.vue').default },
     { path: '/buses', component: require('./components/ManageBus.vue').default },
-    { path: '/busprofile', component: require('./components/BusProfile.vue').default }
+    { path: '/manage_driver', component: require('./components/ManageDriver.vue').default }
 
   ]
 
