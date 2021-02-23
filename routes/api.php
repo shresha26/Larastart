@@ -21,5 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResources(['user' => 'App\Http\Controllers\API\UserController']);
 Route::apiResources(['buses' => 'App\Http\Controllers\API\BusController']);
+Route::apiResources(['driver' => 'App\Http\Controllers\API\BusdriverlistController']);
+//Route::apiResources(['buses.driver' => 'App\Http\Controllers\API\BusdriverlistController']);
 Route::get('profile','App\Http\Controllers\API\UserController@profile');
 Route::put('profile','App\Http\Controllers\API\UserController@updateprofile');

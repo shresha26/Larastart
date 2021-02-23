@@ -189,8 +189,8 @@
                     },
             loadBuses(){
                 axios.get("api/buses").then(({data})=>{
-this.Buses = data.data
-console.log("busses",this.Buses)
+                this.Buses = data.data
+                console.log("busses",this.Buses)
                 }).catch();
             },
 

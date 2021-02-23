@@ -2309,25 +2309,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       editmode: false,
-      users: {},
+      drivers: {},
       form: new Form({
         id: '',
-        Busid: '',
-        Userid: ''
+        name: '',
+        email: '',
+        password: '',
+        type: '',
+        bio: ''
       })
     };
   },
   methods: {
-    updateUser: function updateUser() {
+    updatedriver: function updatedriver() {
       var _this = this;
 
       this.$Progress.start(); // console.log('Editing data');
 
-      this.form.put('api/bus/' + this.form.id).then(function () {
+      this.form.put('api/driver/' + this.form.id).then(function () {
         // success
         $('#addNew').modal('hide');
         Swal.fire('Updated!', 'Information has been updated.', 'success');
@@ -2339,18 +2345,18 @@ __webpack_require__.r(__webpack_exports__);
         _this.$Progress.fail();
       });
     },
-    editModal: function editModal(bus) {
+    editModal: function editModal(driver) {
       this.editmode = true;
       this.form.reset();
       $('#addNew').modal('show');
-      this.form.fill(bus);
+      this.form.fill(driver);
     },
     newModal: function newModal() {
       this.editmode = false;
       this.form.reset();
       $('#addNew').modal('show');
     },
-    deleteDriver: function deleteDriver(id) {
+    deletedriver: function deletedriver(id) {
       var _this2 = this;
 
       Swal.fire({
@@ -2364,7 +2370,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         //send request to the server
         if (result.value) {
-          _this2.form["delete"]('api/bus/' + id).then(function () {
+          _this2.form["delete"]('api/driver/' + id).then(function () {
             Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
             Fire.$emit('AfterCreate');
           })["catch"](function () {
@@ -2373,17 +2379,19 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    loadUsers: function loadUsers() {
+    loaddrivers: function loaddrivers() {
       var _this3 = this;
 
-      axios.get("api/bus").then(function (_ref) {
+      axios.get("api/driver").then(function (_ref) {
         var data = _ref.data;
-        return _this3.users = data.data;
+        return _this3.drivers = data.data;
       });
     },
-    createUser: function createUser() {
+    createdriver: function createdriver() {
       this.$Progress.start();
-      this.form.post('api/bus');
+      this.form.post('api/driver').then()["catch"](function (e) {
+        console.log(e);
+      });
       Fire.$emit('AfterCreate');
       $('#addNew').modal('hide');
       this.$Progress.finish();
@@ -2392,10 +2400,10 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this4 = this;
 
-    this.loadUsers();
+    this.loaddrivers();
     Fire.$on('AfterCreate', function () {
-      _this4.loadUsers();
-    }); //  setInterval(() => this.loadUsers(), 3000);
+      _this4.loaddrivers();
+    }); //  setInterval(() => this.loaddrivers(), 3000);
   }
 });
 
@@ -7279,7 +7287,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.widget-user-header{\n    height: 250px !important;\n}\n.widget-user .card-footer{\n    padding: 0;\n}\n", ""]);
+exports.push([module.i, "\n.widget-user-header{\r\n    height: 250px !important;\n}\n.widget-user .card-footer{\r\n    padding: 0;\n}\r\n", ""]);
 
 // exports
 
@@ -65643,7 +65651,7 @@ var render = function() {
                 { staticClass: "btn btn-success", on: { click: _vm.newModal } },
                 [
                   _vm._v("Add New "),
-                  _c("i", { staticClass: "fas fa-bus-plus fa-fw" })
+                  _c("i", { staticClass: "fas fa-driver-plus fa-fw" })
                 ]
               )
             ])
@@ -65655,13 +65663,17 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "tbody",
-                _vm._l(_vm.users, function(bus) {
-                  return _c("tr", { key: bus.id }, [
-                    _c("td", [_vm._v(_vm._s(_vm.driver.id))]),
+                _vm._l(_vm.drivers, function(driver) {
+                  return _c("tr", { key: driver.id }, [
+                    _c("td", [_vm._v(_vm._s(driver.id))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(_vm.driver.busid))]),
+                    _c("td", [_vm._v(_vm._s(driver.name))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(_vm.driver.userid))]),
+                    _c("td", [_vm._v(_vm._s(driver.email))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(_vm._f("myDate")(driver.created_at)))
+                    ]),
                     _vm._v(" "),
                     _c("td", [
                       _c(
@@ -65670,7 +65682,7 @@ var render = function() {
                           attrs: { href: "#" },
                           on: {
                             click: function($event) {
-                              return _vm.editModal(bus)
+                              return _vm.editModal(driver)
                             }
                           }
                         },
@@ -65685,7 +65697,7 @@ var render = function() {
                           attrs: { href: "#" },
                           on: {
                             click: function($event) {
-                              return _vm.deleteDriver(bus.id)
+                              return _vm.deletedriver(driver.id)
                             }
                           }
                         },
@@ -65748,7 +65760,7 @@ var render = function() {
                   staticClass: "modal-title",
                   attrs: { id: "addNewLabel" }
                 },
-                [_vm._v("Update Driver's Info")]
+                [_vm._v("Update driver's Info")]
               ),
               _vm._v(" "),
               _vm._m(1)
@@ -65760,7 +65772,7 @@ var render = function() {
                 on: {
                   submit: function($event) {
                     $event.preventDefault()
-                    _vm.editmode ? _vm.updateDriver() : _vm.createDriver()
+                    _vm.editmode ? _vm.updatedriver() : _vm.createdriver()
                   }
                 }
               },
@@ -65775,26 +65787,30 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.form.id,
-                            expression: "form.id"
+                            value: _vm.form.name,
+                            expression: "form.name"
                           }
                         ],
                         staticClass: "form-control",
-                        class: { "is-invalid": _vm.form.errors.has("id") },
-                        attrs: { type: "text", id: "id", placeholder: "Id" },
-                        domProps: { value: _vm.form.id },
+                        class: { "is-invalid": _vm.form.errors.has("name") },
+                        attrs: {
+                          type: "text",
+                          name: "name",
+                          placeholder: "Name"
+                        },
+                        domProps: { value: _vm.form.name },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.form, "id", $event.target.value)
+                            _vm.$set(_vm.form, "name", $event.target.value)
                           }
                         }
                       }),
                       _vm._v(" "),
                       _c("has-error", {
-                        attrs: { form: _vm.form, field: "id" }
+                        attrs: { form: _vm.form, field: "name" }
                       })
                     ],
                     1
@@ -65809,30 +65825,30 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.form.Busid,
-                            expression: "form.Busid"
+                            value: _vm.form.email,
+                            expression: "form.email"
                           }
                         ],
                         staticClass: "form-control",
-                        class: { "is-invalid": _vm.form.errors.has("Busid") },
+                        class: { "is-invalid": _vm.form.errors.has("email") },
                         attrs: {
-                          type: "Busid",
-                          Busid: "Busid",
+                          type: "email",
+                          email: "email",
                           placeholder: "Email Address"
                         },
-                        domProps: { value: _vm.form.Busid },
+                        domProps: { value: _vm.form.email },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.form, "Busid", $event.target.value)
+                            _vm.$set(_vm.form, "email", $event.target.value)
                           }
                         }
                       }),
                       _vm._v(" "),
                       _c("has-error", {
-                        attrs: { form: _vm.form, field: "Busid" }
+                        attrs: { form: _vm.form, field: "email" }
                       })
                     ],
                     1
@@ -65842,35 +65858,38 @@ var render = function() {
                     "div",
                     { staticClass: "form-group" },
                     [
-                      _c("textarea", {
+                      _c("input", {
                         directives: [
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.form.Userid,
-                            expression: "form.Userid"
+                            value: _vm.form.password,
+                            expression: "form.password"
                           }
                         ],
                         staticClass: "form-control",
-                        class: { "is-invalid": _vm.form.errors.has("Userid") },
-                        attrs: {
-                          type: "Userid",
-                          Userid: "Userid",
-                          placeholder: "Short.Userid for bus(Optional)"
+                        class: {
+                          "is-invalid": _vm.form.errors.has("password")
                         },
-                        domProps: { value: _vm.form.Userid },
+                        attrs: {
+                          type: "password",
+                          name: "password",
+                          id: "password",
+                          placeholder: "Password"
+                        },
+                        domProps: { value: _vm.form.password },
                         on: {
                           input: function($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.form, "Userid", $event.target.value)
+                            _vm.$set(_vm.form, "password", $event.target.value)
                           }
                         }
                       }),
                       _vm._v(" "),
                       _c("has-error", {
-                        attrs: { form: _vm.form, field: "Userid" }
+                        attrs: { form: _vm.form, field: "password" }
                       })
                     ],
                     1
@@ -65938,9 +65957,13 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("ID")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Busid")]),
+        _c("th", [_vm._v("Name")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Userid")])
+        _c("th", [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Register At")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Modify")])
       ])
     ])
   },
@@ -82626,8 +82649,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\Larastart-development\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Larastart-development\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\Larastart\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\Larastart\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

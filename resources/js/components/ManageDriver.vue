@@ -7,8 +7,9 @@
                 <h3 class="card-title">Drivers Table</h3>
 
                 <div class="card-tools">
-                  <button class="btn btn-success" @click="newModal">Add New <i class="fas fa-bus-plus fa-fw"></i></button>
+                  <button class="btn btn-success" @click="newModal">Add New <i class="fas fa-driver-plus fa-fw"></i></button>
                 </div>
+
 
               </div>
               <!-- /.card-header -->
@@ -17,25 +18,30 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Busid</th>
-                      <th>Userid</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Register At</th>
+                      <th>Modify</th>
                     </tr>
                   </thead>
                   <tbody>
 
-                    <tr v-for="bus in users" :key="bus.id">
+                    <tr v-for="driver in drivers" :key="driver.id">
                       <td>{{driver.id}}</td>
-                      <td>{{driver.busid}}</td>
-                      <td>{{driver.userid}}</td>
+                      <td>{{driver.name}}</td>
+                      <td>{{driver.email}}</td>
+                      <td>{{driver.created_at | myDate}}</td>
+
                       <td>
-                            <a href="#" @click="editModal(bus)">
+                            <a href="#" @click="editModal(driver)">
                                 <i class="fa fa-edit blue"></i>
                             </a>
                             /
-                            <a href="#" @click="deleteDriver(bus.id)">
+                            <a href="#" @click="deletedriver(driver.id)">
                                 <i class="fa fa-trash red"></i>
                             </a>
-                     </td>
+
+                      </td>
                     </tr>
 
                   </tbody>
@@ -52,34 +58,32 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Add New</h5>
-                    <h5 class="modal-title" v-show="editmode" id="addNewLabel">Update Driver's Info</h5>
+                    <h5 class="modal-title" v-show="editmode" id="addNewLabel">Update driver's Info</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form @submit.prevent="editmode ? updateDriver() : createDriver()" >
+                <form @submit.prevent="editmode ? updatedriver() : createdriver()" >
                 <div class="modal-body">
                     <div class="form-group">
-                        <input v-model="form.id" type="text" id="id"
-                            placeholder="Id"
-                            class="form-control" :class="{ 'is-invalid': form.errors.has('id') }">
-                    <has-error :form="form" field="id"></has-error>
+                        <input v-model="form.name" type="text" name="name"
+                            placeholder="Name"
+                            class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
+                    <has-error :form="form" field="name"></has-error>
                 </div>
                  <div class="form-group">
-                    <input v-model="form.Busid" type="Busid" Busid="Busid"
+                    <input v-model="form.email" type="email" email="email"
                         placeholder="Email Address"
-                        class="form-control" :class="{ 'is-invalid': form.errors.has('Busid') }">
-                    <has-error :form="form" field="Busid"></has-error>
+                        class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
+                    <has-error :form="form" field="email"></has-error>
                 </div>
 
                 <div class="form-group">
-                    <textarea v-model="form.Userid" type="Userid" Userid="Userid"
-                    placeholder="Short.Userid for bus(Optional)"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('Userid') }"></textarea>
-                    <has-error :form="form" field="Userid"></has-error>
-                </div>
-
-
+                    <input v-model="form.password" type="password" name="password" id="password"
+                    placeholder = "Password"
+                    class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
+                    <has-error :form="form" field="password"></has-error>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
@@ -87,12 +91,11 @@
                     <button v-show="editmode" type= "submit" class="btn btn-success">Update</button>
                     <button v-show="!editmode" type="submit" class="btn btn-primary">Create</button>
                 </div>
-
                 </form>
-
                 </div>
             </div>
             </div>
+
     </div>
 </template>
 
@@ -101,19 +104,22 @@
         data(){
             return{
                 editmode: false,
-                users : {},
+                drivers : {},
                 form: new Form({
                     id:'',
-                    Busid: '',
-                    Userid: ''
+                    name: '',
+                    email: '',
+                    password: '',
+                    type: '',
+                    bio : ''
                 })
             }
         },
         methods: {
-            updateUser(){
+            updatedriver(){
                 this.$Progress.start();
                 // console.log('Editing data');
-                this.form.put('api/bus/'+this.form.id)
+                this.form.put('api/driver/'+this.form.id)
                 .then(() => {
                     // success
                     $('#addNew').modal('hide');
@@ -130,18 +136,18 @@
                 });
 
             },
-            editModal(bus){
+            editModal(driver){
                 this.editmode = true;
                 this.form.reset();
                 $('#addNew').modal('show');
-                this.form.fill(bus);
+                this.form.fill(driver);
             },
             newModal(){
                 this.editmode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
             },
-            deleteDriver(id){
+            deletedriver(id){
                    Swal.fire({
                          title: 'Are you sure?',
                         text: "You won't be able to revert this!",
@@ -154,7 +160,7 @@
 
                             //send request to the server
                             if (result.value){
-                                    this.form.delete('api/bus/'+id).then(()=>{
+                                    this.form.delete('api/driver/'+id).then(()=>{
                                             Swal.fire(
                                             'Deleted!',
                                             'Your file has been deleted.',
@@ -168,24 +174,26 @@
                         })
 
             },
-            loadUsers(){
-                axios.get("api/bus").then(({data}) => (this.users = data.data));
+            loaddrivers(){
+                axios.get("api/driver").then(({data}) => (this.drivers = data.data));
             },
 
-            createUser(){
+            createdriver(){
                 this.$Progress.start();
-                this.form.post('api/bus');
+                this.form.post('api/driver').then().catch(e => {console.log(e)})
+                ;
                 Fire.$emit('AfterCreate');
                 $('#addNew').modal('hide')
                 this.$Progress.finish();
+
             }
         },
         created() {
-            this.loadUsers();
+            this.loaddrivers();
             Fire.$on('AfterCreate',() => {
-                this.loadUsers();
+                this.loaddrivers();
             });
-        //  setInterval(() => this.loadUsers(), 3000);
+        //  setInterval(() => this.loaddrivers(), 3000);
                 }
     }
 </script>

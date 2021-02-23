@@ -13,10 +13,17 @@ class Busdriverlist extends Migration
      */
     public function up()
     {
-        Schema::create('busdriverlist', function (Blueprint $table) {
+        Schema::create('busdriverlists', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('busid');
-            $table->string('userid');
+            $table->string('busid')->nullable();
+            $table->string('userid')->nullable();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            //$table->string('type')->default('user');
+            //$table->mediumText('bio')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -28,6 +35,6 @@ class Busdriverlist extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('busdriverlist');
+        Schema::dropIfExists('busdriverlists');
     }
 }
