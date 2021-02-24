@@ -4,8 +4,11 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserCollection;
 use App\Models\User;
+use App\Models\Usertype;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -16,7 +19,22 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::latest()->paginate(10);
+        $users = User::latest()->paginate(10);
+        $returns = UserCollection::collection($users);
+        return response()->json([
+            'data'=> $returns,
+            'status'=> Response::HTTP_CREATED
+        ]);
+
+    }
+
+    public function userTypeList(Usertype $usertype){
+        $userTypeList = $usertype->all();
+        return response()->json([
+            'data'=> $userTypeList,
+            'status'=> Response::HTTP_CREATED
+        ]);
+
     }
 
     /**

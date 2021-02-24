@@ -16,7 +16,7 @@ class Buslocation extends Migration
         Schema::create('buslocation', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('driver_id');
-            $table->foreign('driver_id')->references('id')->on('busdriverlist');
+           // $table->foreign('driver_id')->references('id')->on('busdriverlist');
             $table->float('longitude');
             $table->float('latitude');
             $table->timestamps();

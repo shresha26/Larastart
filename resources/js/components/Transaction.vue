@@ -4,10 +4,10 @@
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Users Table</h3>
+                <h3 class="card-title">transactions Table</h3>
 
                 <div class="card-tools">
-                  <button class="btn btn-success" @click="newModal">Add New <i class="fas fa-user-plus fa-fw"></i></button>
+                  <button class="btn btn-success" @click="newModal">Add New <i class="fas fa-transaction-plus fa-fw"></i></button>
                 </div>
 
 
@@ -18,34 +18,32 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Type</th>
-                      <th>Register At</th>
+                      <th>from_account</th>
+                      <th>to_account</th>
+                      <th>type</th>
+                      <th>Status</th>
+                      <th>Amount</th>
                       <th>Modify</th>
                     </tr>
                   </thead>
                   <tbody>
-
-                    <tr v-for="user in users" :key="user.id">
-                      <td>{{user.id}}</td>
-                      <td>{{user.name}}</td>
-                      <td>{{user.email}}</td>
-                      <td>{{user.type}}</td>
-                      <td>{{user.created_at | myDate}}</td>
-
+                    <tr v-for="(transaction, index) in transactions" :key="index">
+                      <td>{{transaction.id}}</td>
+                      <td>{{transaction.from_account}}</td>
+                      <td>{{transaction.to_account}}</td>
+                      <td>{{transaction.type}}</td>
+                      <td>{{transaction.status}}</td>
+                      <td>{{transaction.amount}}</td>
                       <td>
-                            <a href="#" @click="editModal(user)">
+                            <a href="#" @click="editModal(transaction)">
                                 <i class="fa fa-edit blue"></i>
                             </a>
                             /
-                            <a href="#" @click="deleteUser(user.id)">
+                            <a href="#" @click="deletetransaction(transaction.id)">
                                 <i class="fa fa-trash red"></i>
                             </a>
-
                       </td>
                     </tr>
-
                   </tbody>
                 </table>
               </div>
@@ -60,89 +58,101 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Add New</h5>
-                    <h5 class="modal-title" v-show="editmode" id="addNewLabel">Update User's Info</h5>
+                    <h5 class="modal-title" v-show="editmode" id="addNewLabel">Update transaction's Info</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form @submit.prevent="editmode ? updateUser() : createUser()" >
+                <form @submit.prevent="editmode ? updatetransaction() : createtransaction()" >
                 <div class="modal-body">
                     <div class="form-group">
-                        <input v-model="form.name" type="text" name="name"
-                            placeholder="Name"
-                            class="form-control" :class="{ 'is-invalid': form.errors.has('name') }">
-                    <has-error :form="form" field="name"></has-error>
-                </div>
+                        <label>From User</label>
+                        <select class="form-control" v-model="form.from_account">
+                          <option value="" disabled>Please Select From  User</option>
+                          <option :value="item.id"  v-for="(item,index) in userLists" :key="index">{{item.name}}</option>
+                        </select>
+                      </div>
+                    <div class="form-group">
+                        <label>To User</label>
+                        <select class="form-control" v-model="form.to_account" >
+                          <option value="" disabled>Please Select To User</option>
+                          <option :value="item.id" v-for="(item,index) in receiverList" :key="'to'+index">{{item.name}}</option>
+                        </select>
+                    <has-error :form="form" field="to_account"></has-error>
+                    </div>
                  <div class="form-group">
-                    <input v-model="form.email" type="email" email="email"
-                        placeholder="Email Address"
-                        class="form-control" :class="{ 'is-invalid': form.errors.has('email') }">
-                    <has-error :form="form" field="email"></has-error>
-                </div>
-
-                <div class="form-group">
-                    <textarea v-model="form.bio" name="bio" id="bio"
-                    placeholder="Short bio for user(Optional)"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('bio') }"></textarea>
-                    <has-error :form="form" field="bio"></has-error>
-                </div>
-
-                <div class="form-group">
-                    <select name="type" v-model="form.type" id="type" class="form-control" :class="{
-                    'is-invalid': form.errors.has('type') }">
-                        <option value="" disabled>Select User Role</option>
-                        <option :value="item.id" v-for="(item,index) in userTypeList" :key="index">{{item.username}}</option>
-                    </select>
+                    <input v-model="form.type"
+                        placeholder="type"
+                        name="type"
+                        class="form-control" :class="{ 'is-invalid': form.errors.has('type') }">
                     <has-error :form="form" field="type"></has-error>
                 </div>
-
-                <div class="form-group">
-                    <input v-model="form.password" type="password" name="password" id="password"
-                     placeholder="Password"
-                    class="form-control" :class="{ 'is-invalid': form.errors.has('password') }">
-                    <has-error :form="form" field="password"></has-error>
-                    </div>
-
+                 <!-- <div class="form-group">
+                    <input v-model="form.remarks"
+                        placeholder="remarks"
+                        name="remarks"
+                        class="form-control" :class="{ 'is-invalid': form.errors.has('remarks') }">
+                    <has-error :form="form" field="remarks"></has-error>
+                </div> -->
+                 <div class="form-group">
+                    <input v-model="form.status"
+                        placeholder="status"
+                        name="status"
+                        class="form-control" :class="{ 'is-invalid': form.errors.has('status') }">
+                    <has-error :form="form" field="status"></has-error>
+                </div>
+                 <div class="form-group">
+                    <input v-model.number="form.amount"
+                        placeholder="Amount"
+                        name="amount"
+                        type="number"
+                        class="form-control" :class="{ 'is-invalid': form.errors.has('amount') }">
+                    <has-error :form="form" field="amount"></has-error>
+                </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     <button v-show="editmode" type= "submit" class="btn btn-success">Update</button>
                     <button v-show="!editmode" type="submit" class="btn btn-primary">Create</button>
                 </div>
-
                 </form>
-
                 </div>
             </div>
             </div>
-
     </div>
 
 
 </template>
 
 <script>
+    import Axios from "axios"
     export default {
         data(){
             return{
                 editmode: false,
-                users :[],
-                userTypeList:[],
+                transactions : [],
+                userLists : [],
                 form: new Form({
                     id:'',
-                    name: '',
-                    email: '',
-                    password: '',
+                    from_account: '',
+                    to_account: '',
                     type: '',
-                    bio : ''
+                    remarks: '',
+                    amount: '',
+                    status : ''
                 })
             }
         },
+        computed: {
+            receiverList() {
+                return this.userLists.filter(item=>item.id !== this.form.from_account);
+            }
+        },
         methods: {
-            updateUser(){
+            updatetransaction(){
                 this.$Progress.start();
                 // console.log('Editing data');
-                this.form.put('api/user/'+this.form.id)
+                this.form.put('api/transactions/'+this.form.id)
                 .then(() => {
                     // success
                     $('#addNew').modal('hide');
@@ -159,18 +169,21 @@
                 });
 
             },
-            editModal(user){
+            editModal({...transaction}){
+                transaction.from_account = transaction.from_account_id
+                transaction.to_account = transaction.to_account_id
+                console.log('transaction',transaction)
                 this.editmode = true;
                 this.form.reset();
                 $('#addNew').modal('show');
-                this.form.fill(user);
+                this.form.fill(transaction);
             },
             newModal(){
                 this.editmode = false;
                 this.form.reset();
                 $('#addNew').modal('show');
             },
-            deleteUser(id){
+            deletetransaction(id){
                    Swal.fire({
                          title: 'Are you sure?',
                         text: "You won't be able to revert this!",
@@ -183,7 +196,7 @@
 
                             //send request to the server
                             if (result.value){
-                                    this.form.delete('api/user/'+id).then(()=>{
+                                    this.form.delete('api/transactions/'+id).then(()=>{
                                             Swal.fire(
                                             'Deleted!',
                                             'Your file has been deleted.',
@@ -195,31 +208,32 @@
                                     });
                             }
                         })
-
-            },
-            loadUsers(){
-                axios.get("api/user").then(({data}) => (this.users = data.data));
-            },
-            async loadUserTypeList(){
-               const {data} = await axios.get("api/userTypeList")
-               this.userTypeList= data.data
+                    },
+           async loadtransactions(){
+               const {data} = await Axios.get("api/transactions")
+               this.transactions = data.data
             },
 
-            createUser(){
+            createtransaction(){
                 this.$Progress.start();
-                this.form.post('api/user');
+                this.form.post('api/transactions');
                 Fire.$emit('AfterCreate');
                 $('#addNew').modal('hide')
                 this.$Progress.finish();
+            },
+           async  getUsersList(){
+               const {data} = await Axios.get('api/usersList')
+               this.userLists = data.data
+
             }
         },
         created() {
-            this.loadUsers();
-            this.loadUserTypeList();
+            this.loadtransactions();
+            this.getUsersList();
             Fire.$on('AfterCreate',() => {
-                this.loadUsers();
+                this.loadtransactions();
             });
-        //  setInterval(() => this.loadUsers(), 3000);
+        //  setInterval(() => this.loadtransactions(), 3000);
                 }
     }
 </script>

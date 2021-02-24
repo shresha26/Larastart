@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class Busdriverlist extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -16,15 +16,11 @@ class User extends Authenticatable
      *
      * @var array
      */
-    CONST SUPER_ADMIN = 1;
-    CONST ADMIN = 2;
-    CONST NORMAL_USER = 3;
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'id',
+        'account_number',
         'balance',
-        'type'
+        'user'
     ];
 
     /**
@@ -45,7 +41,4 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function userType(){
-        return $this->belongsTo(Usertype::class,'type');
-    }
 }

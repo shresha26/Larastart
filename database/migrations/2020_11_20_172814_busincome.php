@@ -16,11 +16,11 @@ class Busincome extends Migration
         Schema::create('busincome', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('bus_id');
-            $table->foreign('bus_id')->references('id')->on('buses');
+           // $table->foreign('bus_id')->references('id')->on('buses');
             $table->unsignedBigInteger('busdriverlist_id');
-            $table->foreign('busdriverlist_id')->references('id')->on('busdriverlist');
+            //$table->foreign('busdriverlist_id')->references('id')->on('busdriverlist');
             $table->unsignedBigInteger('customerrideinfo_id');
-            $table->foreign('customerrideinfo_id')->references('id')->on('customerrideinfo');
+           // $table->foreign('customerrideinfo_id')->references('id')->on('customerrideinfo');
             $table->float('balance');
             $table->timestamps();
         });

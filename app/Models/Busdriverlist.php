@@ -22,7 +22,7 @@ class Busdriverlist extends Authenticatable
         'userid',
         'name',
         'email',
-        'password',
+        'password'
     ];
 
     /**
