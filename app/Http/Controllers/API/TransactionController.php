@@ -50,7 +50,8 @@ class TransactionController extends Controller
             'remarks' => 'required|string|max:191',
             'status' => 'required|string|max:191',
             'amount' => 'required|integer'
-            ]);
+        ]);
+
         // transaction: sender sending money
         $transaction = Transaction::create([
             'from_account' => $request['from_account'],

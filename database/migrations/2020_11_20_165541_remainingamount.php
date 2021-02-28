@@ -16,9 +16,9 @@ class Remainingamount extends Migration
         Schema::create('remainingamount', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('customerrideinfo_id');
-            $table->foreign('customerrideinfo_id')->references('id')->on('customerrideinfo');
+           // $table->foreign('customerrideinfo_id')->references('id')->on('customerrideinfo');
             $table->unsignedBigInteger('customer_id');
-            $table->foreign('customer_id')->references('id')->on('customerwallet');
+           // $table->foreign('customer_id')->references('id')->on('customerwallet');
             $table->float('remainingbalance');
             $table->timestamps();
         });
