@@ -35,7 +35,8 @@ let routes = [
     { path: '/profile', component: require('./components/Profile.vue').default },
     { path: '/buses', component: require('./components/ManageBus.vue').default },
     { path: '/manage_driver', component: require('./components/ManageDriver.vue').default },
-    { path: '/transaction', component: require('./components/Transaction.vue').default }
+    { path: '/transaction', component: require('./components/Transaction.vue').default },
+    { path: '/topup', component: require('./components/TopUp.vue').default }
 
   ]
 

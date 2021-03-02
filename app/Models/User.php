@@ -24,7 +24,8 @@ class User extends Authenticatable
         'email',
         'password',
         'balance',
-        'type'
+        'type' // admin, passenger, driver
+        // TODO only user type admin can access webpage. passenger and driver can only access mobile app
     ];
 
     /**

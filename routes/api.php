@@ -28,6 +28,8 @@ Route::apiResources(['user' => 'App\Http\Controllers\API\UserController']);
 Route::apiResources(['buses' => 'App\Http\Controllers\API\BusController']);
 Route::apiResources(['driver' => 'App\Http\Controllers\API\BusdriverlistController']);
 Route::apiResources(['transactions' => 'App\Http\Controllers\API\TransactionController']);
+Route::apiResources(['generate' => 'App\Http\Controllers\API\TopUpController']);
+
 //Route::apiResources(['buses.driver' => 'App\Http\Controllers\API\BusdriverlistController']);
 Route::get('profile','App\Http\Controllers\API\UserController@profile');
 Route::put('profile','App\Http\Controllers\API\UserController@updateprofile');

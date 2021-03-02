@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\TransactionCollection;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\TopUp;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -34,6 +35,16 @@ class TransactionController extends Controller
 
     }
 
+    private function get_code() {
+        return mt_rand(10000000,99999999);
+    }
+
+    private function get_balance() {
+        $balances = array(10, 50, 100, 500, 1000);
+        $balance = $balances[array_rand($balances)];
+        return $balance;
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -44,13 +55,18 @@ class TransactionController extends Controller
     {
 
         $this->validate($request,[
-            'from_account' => 'required|integer|max:191|unique:transactions',
-            'to_account' => 'required|integer|max:191|unique:transactions',
+            'from_account' => 'required|integer|max:191',
+            'to_account' => 'required|integer|max:191',
             'type' => 'required|string|max:191',
             'remarks' => 'required|string|max:191',
             'status' => 'required|string|max:191',
             'amount' => 'required|integer'
         ]);
+
+        $from_user_id = $request['from_account'];
+        $to_user_id = $request['to_account'];
+
+        // TODO check if sender has enough balance
 
         // transaction: sender sending money
         $transaction = Transaction::create([
@@ -61,32 +77,32 @@ class TransactionController extends Controller
             'status' => $request['status'],
             'amount' => $request['amount'],
         ]);
-        //return($transaction);
-        //$from_user = $transaction->senderUser->first();
-       // $to_user = $transaction->receiverUser->first();
 
-        // deduct balance from sender user
-        // $from_user = select * from user where id=$request['from_account']
-        // $from_id = $from_user->id;
-        // $current_balance = $from_id->balance;
-        // $new_balance = $from_user->balance - $request['amount']
-        // $txn_user_dr =
-        // update user set balance=$new_balance where form_id
+        // Deduct balance from sender
+        $from_user =  User::findOrFail($from_user_id);
+        $balance = $from_user->balance;
+        $balance -= $request['amount'];
+        $from_user->balance = $balance;
+        $from_user->save();
 
-        // transaction: receipent ceiving money
-        // $transaction = Transaction::create([
-        //     'from_account' => $request['from_account'],
-        //     'to_account' => $request['to_account'],
-        //     'type' => 'Cr.',
-        //     'remarks' => $request['remarks'],
-        //     'status' => $request['status'],
-        //     'amount' => $request['amount'],
-        // ]);
+        // add transaction data to receiver
+        $transaction1 = Transaction::create([
+            'from_account' => $request['to_account'],
+            'to_account' => $request['from_account'],
+            'type' => 'Cr',
+            'remarks' => $request['remarks'],
+            'status' => $request['status'],
+            'amount' => $request['amount'],
+        ]);
 
+        // Add balance to receiver
+        $to_user =  User::findOrFail($to_user_id);
+        $balance = $to_user->balance;
+        $balance += $request['amount'];
+        $to_user->balance = $balance;
+        $to_user->save();
 
-
-        // add balance to recever user
-        // $
+        
         return response()->json([
             'data'=> $transaction,
             'status'=> Response::HTTP_CREATED
