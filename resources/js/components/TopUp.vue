@@ -7,7 +7,7 @@
                 <h3 class="card-title">TopUp Table</h3>
 
                 <div class="card-tools">
-                  <button class="btn btn-success" @click="newModal">Add New <i class="fas fa-topup-plus fa-fw"></i></button>
+                  <button class="btn btn-success" @click="newModal">Generate <i class="fas fa-topup-plus fa-fw"></i></button>
                 </div>
 
 
@@ -52,12 +52,12 @@
           </div>
         </div>
     <!-- Modal -->
-            <div class="modal fade" id="addNew" tabindex="-1" aria-labelledby="addNewLabel" aria-hidden="true">
+            <div class="modal fade" id="generate" tabindex="-1" aria-labelledby="generateLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" v-show="!editmode" id="addNewLabel">Add New</h5>
-                    <h5 class="modal-title" v-show="editmode" id="addNewLabel">Update TopUp's Info</h5>
+                    <h5 class="modal-title" v-show="!editmode" id="generateLabel">Generate</h5>
+                    <h5 class="modal-title" v-show="editmode" id="generateLabel">Update TopUp's Info</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                     </button>
@@ -123,10 +123,10 @@
             updatetopup(){
                 this.$Progress.start();
                 // console.log('Editing data');
-                this.form.put('api/topup/'+this.form.id)
+                this.form.put('api/generate/'+this.form.id)
                 .then(() => {
                     // success
-                    $('#addNew').modal('hide');
+                    $('#generate').modal('hide');
                      Swal.fire(
                         'Updated!',
                         'Information has been updated.',
@@ -143,13 +143,13 @@
             editModal(topup){
                 this.editmode = true;
                 this.form.reset();
-                $('#addNew').modal('show');
+                $('#generate').modal('show');
                 this.form.fill(topup);
             },
             newModal(){
                 this.editmode = false;
                 this.form.reset();
-                $('#addNew').modal('show');
+                $('#generate').modal('show');
             },
             deletetopup(id){
                    Swal.fire({
@@ -164,7 +164,7 @@
 
                             //send request to the server
                             if (result.value){
-                                    this.form.delete('api/topup/'+id).then(()=>{
+                                    this.form.delete('api/generate/'+id).then(()=>{
                                             Swal.fire(
                                             'Deleted!',
                                             'Your file has been deleted.',
@@ -179,15 +179,15 @@
 
             },
             loadtopups(){
-                axios.get("api/topup").then(({data}) => (this.topups = data.data));
+                axios.get("api/generate").then(({data}) => (this.topups = data.data));
             },
 
             createtopup(){
                 this.$Progress.start();
-                this.form.post('api/topup').then().catch(e => {console.log(e)})
+                this.form.post('api/generate').then().catch(e => {console.log(e)})
                 ;
                 Fire.$emit('AfterCreate');
-                $('#addNew').modal('hide')
+                $('#generate').modal('hide')
                 this.$Progress.finish();
 
             }

@@ -2776,9 +2776,9 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$Progress.start(); // console.log('Editing data');
 
-      this.form.put('api/topup/' + this.form.id).then(function () {
+      this.form.put('api/generate/' + this.form.id).then(function () {
         // success
-        $('#addNew').modal('hide');
+        $('#generate').modal('hide');
         Swal.fire('Updated!', 'Information has been updated.', 'success');
 
         _this.$Progress.finish();
@@ -2791,13 +2791,13 @@ __webpack_require__.r(__webpack_exports__);
     editModal: function editModal(topup) {
       this.editmode = true;
       this.form.reset();
-      $('#addNew').modal('show');
+      $('#generate').modal('show');
       this.form.fill(topup);
     },
     newModal: function newModal() {
       this.editmode = false;
       this.form.reset();
-      $('#addNew').modal('show');
+      $('#generate').modal('show');
     },
     deletetopup: function deletetopup(id) {
       var _this2 = this;
@@ -2813,7 +2813,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (result) {
         //send request to the server
         if (result.value) {
-          _this2.form["delete"]('api/topup/' + id).then(function () {
+          _this2.form["delete"]('api/generate/' + id).then(function () {
             Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
             Fire.$emit('AfterCreate');
           })["catch"](function () {
@@ -2825,18 +2825,18 @@ __webpack_require__.r(__webpack_exports__);
     loadtopups: function loadtopups() {
       var _this3 = this;
 
-      axios.get("api/topup").then(function (_ref) {
+      axios.get("api/generate").then(function (_ref) {
         var data = _ref.data;
         return _this3.topups = data.data;
       });
     },
     createtopup: function createtopup() {
       this.$Progress.start();
-      this.form.post('api/topup').then()["catch"](function (e) {
+      this.form.post('api/generate').then()["catch"](function (e) {
         console.log(e);
       });
       Fire.$emit('AfterCreate');
-      $('#addNew').modal('hide');
+      $('#generate').modal('hide');
       this.$Progress.finish();
     }
   },
@@ -67692,7 +67692,7 @@ var render = function() {
                 "button",
                 { staticClass: "btn btn-success", on: { click: _vm.newModal } },
                 [
-                  _vm._v("Add New "),
+                  _vm._v("Generate "),
                   _c("i", { staticClass: "fas fa-topup-plus fa-fw" })
                 ]
               )
@@ -67759,9 +67759,9 @@ var render = function() {
       {
         staticClass: "modal fade",
         attrs: {
-          id: "addNew",
+          id: "generate",
           tabindex: "-1",
-          "aria-labelledby": "addNewLabel",
+          "aria-labelledby": "generateLabel",
           "aria-hidden": "true"
         }
       },
@@ -67781,9 +67781,9 @@ var render = function() {
                     }
                   ],
                   staticClass: "modal-title",
-                  attrs: { id: "addNewLabel" }
+                  attrs: { id: "generateLabel" }
                 },
-                [_vm._v("Add New")]
+                [_vm._v("Generate")]
               ),
               _vm._v(" "),
               _c(
@@ -67798,7 +67798,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "modal-title",
-                  attrs: { id: "addNewLabel" }
+                  attrs: { id: "generateLabel" }
                 },
                 [_vm._v("Update TopUp's Info")]
               ),
