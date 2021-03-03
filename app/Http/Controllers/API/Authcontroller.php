@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Tymon\JWTAuth\Facades\JWTAuth;
+//use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -30,12 +30,14 @@ class AuthController extends Controller
         $this->validate($request,[
             'name'=>'required',
             'email'=>'required|email|unique:users,email',
-            'password'=>'required|min:6'
+            'password'=>'required|min:6',
+            'usertype' => 'required'
         ]);
         $user=new User;
         $user->name=$request->name;
         $user->email=$request->email;
         $user->password=Hash::make($request->password);
+       $user->usertypes=$request->usertypes;
         $user->save();
         return $this->login($request);
     }

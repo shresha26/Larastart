@@ -7,7 +7,7 @@
                 <h3 class="card-title">TopUp Table</h3>
 
                 <div class="card-tools">
-                  <button class="btn btn-success" @click="newModal">Generate <i class="fas fa-topup-plus fa-fw"></i></button>
+                  <button class="btn btn-success" @click=" createtopup()">Generate <i class="fas fa-topup-plus fa-fw"></i></button>
                 </div>
 
 
@@ -184,8 +184,7 @@
 
             createtopup(){
                 this.$Progress.start();
-                this.form.post('api/generate').then().catch(e => {console.log(e)})
-                ;
+                this.form.post('api/generate').then().catch(e => {console.log(e)});
                 Fire.$emit('AfterCreate');
                 $('#generate').modal('hide')
                 this.$Progress.finish();

@@ -7,11 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customerwallet extends Model
 {
-    protected$fillable = [
+    protected $table = 'customerwallet';
+    protected $fillable = [
         'id',
         'customername',
         'email',
         'address',
         'phone no',
-        'balance', 
-            ];}
+        'balance',
+        'user_id',
+         ];
+        public function walletHolder(){
+            return $this->belongsTo(User::class);
+        }
+}

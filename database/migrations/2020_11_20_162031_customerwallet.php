@@ -20,6 +20,7 @@ class Customerwallet extends Migration
             $table->string('address');
             $table->string('phone no');
             $table->float('balance');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

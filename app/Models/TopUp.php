@@ -14,4 +14,6 @@ class TopUp extends Model
         'amount',
         'status',
     ];
+    const UTILIZED = 1;
+    const UNUTILIZED = 0;
 }

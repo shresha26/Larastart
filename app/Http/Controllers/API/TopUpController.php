@@ -26,17 +26,15 @@ class TopUpController extends Controller
         // TODO create endpoint /api/topup/generate
         // TODO only admin can call this method
 
-
-
-
+        for($i=0;$i<=100;$i++){
             $topupCode = $this->get_code();
             $balance = $this->get_balance();
 
-           $topip = TopUp::create([
+            $topip[$i] = TopUp::create([
                 'code' => $topupCode,
-                'amount' => $balance,
-                'status' => $request->status
+                'amount' => $balance
             ]);
+        }
             return response()->json([
                 'data'=> $topip,
                 'status'=> Response::HTTP_CREATED

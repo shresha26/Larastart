@@ -18,10 +18,11 @@ use Illuminate\Support\Facades\Route;
 });*/
 
 Route::post('login','App\Http\Controllers\API\Authcontroller@login');
-// Route::post('register','App\Http\Controllers\API\AuthController@register');
-// Route::get('logout','Api\AuthController@logout');
-//Route::get('save_user_info','Api\AuthController@saveUserInfo')->middleware('jwtAuth');
+Route::post('register','App\Http\Controllers\API\AuthController@register');
+// Route::get('logout','App\Http\Controllers\API\AuthController@logout');
+Route::get('save_user_info','App\Http\Controllers\API\AuthController@saveUserInfo')->middleware('jwtAuth');
 
+Route::apiResources(['topup' => 'App\Http\Controllers\API\ClientTopUpController']);
 Route::get('usersList','App\Http\Controllers\API\TransactionController@usersList');
 Route::get('userTypeList','App\Http\Controllers\API\UserController@userTypeList');
 Route::apiResources(['user' => 'App\Http\Controllers\API\UserController']);

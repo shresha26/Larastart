@@ -67690,7 +67690,14 @@ var render = function() {
             _c("div", { staticClass: "card-tools" }, [
               _c(
                 "button",
-                { staticClass: "btn btn-success", on: { click: _vm.newModal } },
+                {
+                  staticClass: "btn btn-success",
+                  on: {
+                    click: function($event) {
+                      return _vm.createtopup()
+                    }
+                  }
+                },
                 [
                   _vm._v("Generate "),
                   _c("i", { staticClass: "fas fa-topup-plus fa-fw" })

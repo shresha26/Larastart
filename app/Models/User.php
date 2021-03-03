@@ -49,4 +49,13 @@ class User extends Authenticatable
     public function userType(){
         return $this->belongsTo(Usertype::class,'type');
     }
+    public function fromTransaction(){
+        return $this->hasMany(Transaction::class,'from_account');
+    }
+    public function toTransaction(){
+        return $this->hasMany(Transaction::class,'to_account');
+    }
+    public function wallet(){
+        return $this->hasOne(Customerwallet::class);
+    }
 }
